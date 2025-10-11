@@ -1,5 +1,9 @@
+'use client';
+
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
+import PaymentModal from "@/components/PaymentModal";
 
 const heroImage = "/generated/2025-10-11_07-14-16-234.webp";
 
@@ -32,9 +36,19 @@ const proceedsUse = [
 ];
 
 export default function SiembraVivaPage() {
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const goalAmount = 100000;
   const raisedAmount = 68000;
   const progress = Math.round((raisedAmount / goalAmount) * 100);
+
+  const projectData = {
+    title: "SiembraViva Digital Marketplace",
+    slug: "siembraviva",
+    revenueShare: 10,
+    targetAmount: 100000,
+    raisedAmount: 68000,
+    minimumInvestment: 50,
+  };
 
   return (
     <div className="min-h-screen bg-white pb-24">
@@ -108,7 +122,10 @@ export default function SiembraVivaPage() {
                   </div>
                 ))}
               </div>
-              <button className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-emerald-500 px-8 py-4 text-base font-semibold text-white transition hover:bg-emerald-600">
+              <button
+                onClick={() => setIsPaymentModalOpen(true)}
+                className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-emerald-500 px-8 py-4 text-base font-semibold text-white transition hover:bg-emerald-600"
+              >
                 Invest
               </button>
               <p className="text-xs leading-relaxed text-slate-500">
@@ -188,6 +205,12 @@ export default function SiembraVivaPage() {
           </div>
         </section>
       </main>
+
+      <PaymentModal
+        isOpen={isPaymentModalOpen}
+        onClose={() => setIsPaymentModalOpen(false)}
+        project={projectData}
+      />
     </div>
   );
 }
