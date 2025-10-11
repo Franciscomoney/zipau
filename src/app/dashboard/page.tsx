@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import RiskRatingSlider from '@/components/RiskRatingSlider';
 
 interface Investment {
   id: string;
@@ -19,6 +20,7 @@ interface Investment {
   projectProgress: number;
   investmentDate: string;
   status: 'active' | 'completed' | 'pending';
+  riskRating: number;
 }
 
 export default function DashboardPage() {
@@ -37,7 +39,8 @@ export default function DashboardPage() {
       revenueShare: 20,
       projectProgress: 48,
       investmentDate: '2024-01-15',
-      status: 'active'
+      status: 'active',
+      riskRating: 7
     },
     {
       id: 'inv-002',
@@ -53,7 +56,8 @@ export default function DashboardPage() {
       revenueShare: 15,
       projectProgress: 35,
       investmentDate: '2024-01-20',
-      status: 'active'
+      status: 'active',
+      riskRating: 4
     },
     {
       id: 'inv-003',
@@ -69,7 +73,8 @@ export default function DashboardPage() {
       revenueShare: 10,
       projectProgress: 68,
       investmentDate: '2024-02-01',
-      status: 'active'
+      status: 'active',
+      riskRating: 6
     }
   ]);
 
@@ -215,67 +220,94 @@ export default function DashboardPage() {
               </div>
             ) : (
               <div className="grid gap-6 lg:grid-cols-2">
-                {investments.map((investment) => (
-                  <div key={investment.id} className="bg-white rounded-2xl border border-slate-200 p-6 hover:shadow-lg transition-shadow">
-                    <div className="flex items-start gap-4 mb-4">
-                      <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-2xl">
-                        {investment.projectIcon}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <Link 
-                          href={`/${investment.projectSlug}`}
-                          className="text-lg font-semibold text-slate-900 hover:text-blue-600 transition-colors"
-                        >
-                          {investment.projectTitle}
-                        </Link>
-                        <p className="text-sm text-slate-600 mt-1 line-clamp-2">
-                          {investment.projectDescription}
-                        </p>
-                        <div className="flex items-center gap-2 mt-2">
-                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(investment.status)}`}>
-                            {investment.status.charAt(0).toUpperCase() + investment.status.slice(1)}
-                          </span>
-                          <span className="text-xs text-slate-500">
-                            Invested {formatDate(investment.investmentDate)}
-                          </span>
+                {investments.map((investment) => {
+                  const progressDegrees = Math.max(0, Math.min(100, investment.projectProgress)) * 3.6;
+                  const progressRingStyle = {
+                    background: `conic-gradient(var(--color-primary) ${progressDegrees}deg, rgba(15, 31, 47, 0.12) ${progressDegrees}deg)`,
+                  };
+
+                  return (
+                    <div key={investment.id} className="bg-white rounded-2xl border border-slate-200 p-6 hover:shadow-lg transition-shadow">
+                      {/* Header with icon, title, and progress circle */}
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="flex items-start gap-4 flex-1 min-w-0">
+                          <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-2xl flex-shrink-0">
+                            {investment.projectIcon}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <Link 
+                              href={`/${investment.projectSlug}`}
+                              className="text-lg font-semibold text-slate-900 hover:text-blue-600 transition-colors block"
+                            >
+                              {investment.projectTitle}
+                            </Link>
+                            <p className="text-sm text-slate-600 mt-1 line-clamp-2">
+                              {investment.projectDescription}
+                            </p>
+                            <div className="flex items-center gap-2 mt-2">
+                              <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(investment.status)}`}>
+                                {investment.status.charAt(0).toUpperCase() + investment.status.slice(1)}
+                              </span>
+                              <span className="text-xs text-slate-500">
+                                Invested {formatDate(investment.investmentDate)}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        {/* Progress circle in header */}
+                        <div className="relative h-14 w-14 rounded-full flex-shrink-0" style={progressRingStyle}>
+                          <div className="absolute inset-[3px] flex items-center justify-center rounded-full bg-white shadow-sm">
+                            <span className="text-xs font-semibold text-[--color-primary]">
+                              {investment.projectProgress}%
+                            </span>
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    <div className="grid grid-cols-2 gap-4 mb-4">
-                      <div>
-                        <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">Your Investment</p>
-                        <p className="text-lg font-semibold text-slate-900">€{investment.contributedAmount.toLocaleString()}</p>
+                      {/* Key metrics grid */}
+                      <div className="grid grid-cols-2 gap-4 mb-4">
+                        <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3">
+                          <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">Your Investment</p>
+                          <p className="text-lg font-semibold text-slate-900 mt-1">€{investment.contributedAmount.toLocaleString()}</p>
+                        </div>
+                        <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3">
+                          <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">Est. Quarterly Return</p>
+                          <p className="text-lg font-semibold text-emerald-600 mt-1">€{investment.estimatedQuarterlyReturn.toLocaleString()}</p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">Est. Quarterly Return</p>
-                        <p className="text-lg font-semibold text-emerald-600">€{investment.estimatedQuarterlyReturn.toLocaleString()}</p>
-                      </div>
-                    </div>
 
-                    <div className="grid grid-cols-2 gap-4 mb-4">
-                      <div>
-                        <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">Next Payout</p>
-                        <p className="text-sm font-semibold text-slate-900">{formatDate(investment.nextPayoutDate)}</p>
+                      <div className="grid grid-cols-2 gap-4 mb-4">
+                        <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3">
+                          <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">Next Payout</p>
+                          <p className="text-sm font-semibold text-slate-900 mt-1">{formatDate(investment.nextPayoutDate)}</p>
+                        </div>
+                        <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3">
+                          <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">Total Received</p>
+                          <p className="text-sm font-semibold text-slate-900 mt-1">€{investment.totalPaid.toLocaleString()}</p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">Total Received</p>
-                        <p className="text-sm font-semibold text-slate-900">€{investment.totalPaid.toLocaleString()}</p>
-                      </div>
-                    </div>
 
-                    <div className="flex items-center justify-between pt-4 border-t border-slate-100">
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs text-slate-500">Revenue Share:</span>
-                        <span className="text-sm font-semibold text-slate-900">{investment.revenueShare}%</span>
+                      {/* Risk Rating Slider */}
+                      <div className="mb-4">
+                        <RiskRatingSlider riskRating={investment.riskRating} />
                       </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs text-slate-500">Progress:</span>
-                        <span className="text-sm font-semibold text-slate-900">{investment.projectProgress}%</span>
+
+                      {/* Footer with additional info */}
+                      <div className="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs text-slate-500">Revenue Share:</span>
+                          <span className="text-sm font-semibold text-slate-900">{investment.revenueShare}%</span>
+                        </div>
+                        <Link
+                          href={`/${investment.projectSlug}`}
+                          className="text-xs font-medium text-blue-600 hover:text-blue-700 transition-colors"
+                        >
+                          View Details →
+                        </Link>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>

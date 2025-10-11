@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import CircleSlider from '@/components/CircleSlider';
+import RiskRatingSlider from '@/components/RiskRatingSlider';
 
 interface ProjectData {
   title: string;
@@ -12,6 +13,7 @@ interface ProjectData {
   targetAmount: number;
   raisedAmount: number;
   minimumInvestment: number;
+  riskRating: number;
 }
 
 export default function PaymentPage() {
@@ -33,6 +35,7 @@ export default function PaymentPage() {
       targetAmount: 5000,
       raisedAmount: 2400,
       minimumInvestment: 10,
+      riskRating: 7,
     },
     gallikos: {
       title: "Eco-Corridor Gallikos Delta",
@@ -41,6 +44,7 @@ export default function PaymentPage() {
       targetAmount: 25000,
       raisedAmount: 8750,
       minimumInvestment: 25,
+      riskRating: 4,
     },
     siembraviva: {
       title: "SiembraViva Digital Marketplace",
@@ -49,6 +53,7 @@ export default function PaymentPage() {
       targetAmount: 100000,
       raisedAmount: 68000,
       minimumInvestment: 50,
+      riskRating: 6,
     },
   };
 
@@ -189,6 +194,11 @@ export default function PaymentPage() {
                       €{estimatedQuarterlyIncome.toLocaleString()}
                     </p>
                   </div>
+                </div>
+
+                {/* Risk Rating Slider */}
+                <div className="rounded-2xl border border-[--color-border]/70 bg-white p-6">
+                  <RiskRatingSlider riskRating={project.riskRating} />
                 </div>
 
                 <div className="rounded-2xl border border-[--color-border]/70 bg-white p-6">
