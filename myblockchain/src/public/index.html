@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zipa · Paseo Revenue Share Orchestrator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --background: #ffffff;
+      --foreground: #0f1f2f;
+      --color-primary: #005b7f;
+      --color-secondary: #f4a51c;
+      --color-accent: #0097a7;
+      --color-muted: #f3f6fb;
+      --color-border: #e1e7f0;
+      --accent-soft: rgba(0, 151, 167, 0.12);
+      --surface: rgba(243, 246, 251, 0.85);
+      --glass: rgba(255, 255, 255, 0.7);
+      --text-primary: #0f1f2f;
+      --text-muted: #64748b;
+      --border-subtle: rgba(225, 231, 240, 0.85);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Geist', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--background);
+      color: var(--text-primary);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page-shell {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 24px 96px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 56px;
+      gap: 16px;
+    }
+
+    .logo {
+      height: 48px;
+      width: auto;
+      display: block;
+    }
+
+    .cta-button {
+      background: var(--color-primary);
+      color: #ffffff;
+      border: none;
+      padding: 14px 30px;
+      border-radius: 999px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+      box-shadow: 0 14px 40px rgba(0, 91, 127, 0.24);
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 54px rgba(0, 91, 127, 0.36);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 48px;
+      align-items: center;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(2.8rem, 5vw, 3.7rem);
+      line-height: 1.06;
+      letter-spacing: -0.03em;
+      margin-bottom: 22px;
+    }
+
+    .hero-text p {
+      font-size: 1.12rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin-bottom: 30px;
+      max-width: 520px;
+    }
+
+    .hero-card {
+      background: var(--surface);
+      border: 1px solid var(--color-border);
+      border-radius: 26px;
+      padding: 28px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 16px 40px rgba(15, 31, 47, 0.08);
+    }
+
+    .hero-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 18px;
+    }
+
+    .hero-card ul {
+      list-style: none;
+      display: grid;
+      gap: 14px;
+    }
+
+    .hero-card li {
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: #ffffff;
+      border: 1px solid var(--color-border);
+      display: grid;
+      gap: 6px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .accent-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--color-primary);
+      font-weight: 600;
+      margin-bottom: 18px;
+      font-size: 0.92rem;
+    }
+
+    .stacked-section {
+      margin-top: 84px;
+    }
+
+    .section-heading {
+      font-size: 2rem;
+      margin-bottom: 18px;
+    }
+
+    .section-subtitle {
+      color: var(--text-muted);
+      max-width: 640px;
+      margin-bottom: 36px;
+      line-height: 1.6;
+    }
+
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid var(--color-border);
+      border-radius: 22px;
+      padding: 24px;
+      box-shadow: 0 16px 40px rgba(15, 31, 47, 0.08);
+    }
+
+    .card h4 {
+      margin-bottom: 14px;
+      font-size: 1.1rem;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      line-height: 1.55;
+      font-size: 0.98rem;
+    }
+
+    .tx-links {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--color-border);
+      display: grid;
+      gap: 12px;
+    }
+
+    .tx-links h5 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--color-primary);
+    }
+
+    .tx-links ul {
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .tx-links li {
+      display: grid;
+      gap: 6px;
+      background: rgba(0, 91, 127, 0.05);
+      border: 1px dashed rgba(0, 91, 127, 0.25);
+      border-radius: 12px;
+      padding: 12px 14px;
+    }
+
+    .tx-links a {
+      color: var(--color-primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .tx-links a:hover {
+      text-decoration: underline;
+    }
+
+    .tx-hash {
+      font-family: 'Geist Mono', 'Geist', monospace;
+      font-size: 0.75rem;
+      color: #475569;
+      word-break: break-all;
+    }
+
+    .balances-panel {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .balance-tile {
+      background: var(--color-muted);
+      border: 1px solid var(--color-border);
+      border-radius: 18px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .balance-label {
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .balance-value {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+
+    .balance-address {
+      font-family: 'Geist Mono', 'Geist', monospace;
+      font-size: 0.78rem;
+      word-break: break-all;
+      color: #94a3b8;
+    }
+
+    form {
+      display: grid;
+      gap: 18px;
+      margin-top: 26px;
+    }
+
+    .field-group {
+      display: grid;
+      gap: 8px;
+    }
+
+    label {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    input, textarea {
+      background: #ffffff;
+      border: 1px solid var(--color-border);
+      border-radius: 14px;
+      padding: 14px 16px;
+      color: var(--text-primary);
+      font-family: inherit;
+      resize: vertical;
+      min-height: 52px;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--color-primary);
+    }
+
+    textarea {
+      min-height: 120px;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .subtle-button {
+      padding: 14px 24px;
+      border-radius: 999px;
+      background: transparent;
+      border: 2px solid var(--color-border);
+      color: var(--text-primary);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .subtle-button:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      transform: translateY(-1px);
+    }
+
+    .message {
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .message.success {
+      background: rgba(0, 151, 167, 0.12);
+      border: 1px solid var(--color-accent);
+      color: var(--color-primary);
+    }
+
+    .message.error {
+      background: rgba(255, 99, 105, 0.18);
+      border: 1px solid rgba(255, 99, 105, 0.4);
+    }
+
+    footer {
+      margin-top: 104px;
+      text-align: center;
+      color: #94a3b8;
+      font-size: 0.86rem;
+      letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 720px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero-card {
+        order: -1;
+      }
+
+      .form-actions {
+        flex-direction: column;
+      }
+
+      .cta-button,
+      .subtle-button {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header>
+      <img src="/logo.png" alt="ZIPA" class="logo">
+      <button class="cta-button" onclick="scrollToSection('flow-section')">Execute Revenue Flow</button>
+    </header>
+
+    <section class="hero">
+      <div class="hero-text">
+        <div class="accent-pill">Zipa · Impact investing on Polkadot Paseo</div>
+        <h1>Establish IP on-chain, fund projects with PAS tokens, and distribute revenue shares to investors.</h1>
+        <p>
+          This Zipa control room mirrors the production environment at <a href="http://51.178.253.51:2020/" target="_blank" rel="noopener" style="color: var(--color-primary); text-decoration: none; border-bottom: 1px solid var(--color-primary);">zipa.polkadot</a>.
+          Submit project metadata to establish intellectual property rights on-chain, deposit 1,000 PAS from the creator wallet to the platform pool, and enable investors to purchase fractional shares — all on the Paseo testnet.
+        </p>
+        <div class="form-actions">
+          <button class="cta-button" onclick="scrollToSection('metadata-section')">Establish IP On-Chain</button>
+          <button class="subtle-button" onclick="loadBalances()">Refresh Balances</button>
+        </div>
+      </div>
+      <aside class="hero-card">
+        <h3>Wallet telemetry</h3>
+        <ul id="walletPreview">
+          <li>Fetching Paseo balances…</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section class="stacked-section">
+      <h2 class="section-heading">Inside the Zipa revenue-sharing flow</h2>
+      <p class="section-subtitle">
+        We use three derived wallets from the same mnemonic: platform treasury <strong>//0</strong>, creator wallet <strong>//1</strong>, and investor pool <strong>//2</strong>.
+        Each run demonstrates the IP establishment and fractional share distribution showcased on the live Zipa site.
+      </p>
+      <div class="grid-cards">
+        <article class="card">
+          <h4>1 · IP Establishment</h4>
+          <p>Creator submits project metadata to the blockchain, establishing verifiable intellectual property rights and creating an immutable record before any capital moves.</p>
+        </article>
+        <article class="card">
+          <h4>2 · Creator Deposit</h4>
+          <p>The creator wallet (//1) deposits 1,000 PAS into the platform pool (//0), representing the project funding that will be fractionalized into investor shares.</p>
+        </article>
+        <article class="card">
+          <h4>3 · Investor Shares</h4>
+          <p>Platform distributes shares to investors (//2) proportional to their investment. Each PAS invested equals a fraction of future revenue. Example: 20 PAS = 2% of quarterly dividends.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="stacked-section" id="balances-section">
+      <h2 class="section-heading">Live Paseo wallet balances</h2>
+      <p class="section-subtitle">Track the creator wallet, platform pool, and investor wallet in PAS tokens (10 decimal precision). Click "Refresh Balances" to query the chain state.</p>
+      <div class="balances-panel" id="balancesPanel"></div>
+    </section>
+
+    <section class="stacked-section" id="metadata-section">
+      <h2 class="section-heading">Establish intellectual property on-chain</h2>
+      <p class="section-subtitle">Document your social impact project and establish verifiable IP rights on the Paseo blockchain. This creates an immutable record that protects your project concept before fundraising begins.</p>
+      <form id="metadataForm">
+        <div class="field-group">
+          <label for="projectName">Project name</label>
+          <input id="projectName" name="projectName" type="text" placeholder="Example: Maria's Olive Loop Furniture" required />
+        </div>
+        <div class="field-group">
+          <label for="projectSummary">Project description & IP details</label>
+          <textarea id="projectSummary" name="projectSummary" placeholder="Describe your social impact project, key innovations, team, and how the 1,000 PAS funding will create measurable impact. This becomes your on-chain IP record." required></textarea>
+        </div>
+        <div class="form-actions">
+          <button class="cta-button" type="submit">Register IP on Blockchain</button>
+          <button class="subtle-button" type="button" onclick="resetMetadata()">Clear fields</button>
+        </div>
+        <div id="metadataMessage"></div>
+      </form>
+    </section>
+
+    <section class="stacked-section" id="flow-section">
+      <h2 class="section-heading">Execute the revenue-sharing flow</h2>
+      <p class="section-subtitle">Trigger the complete Zipa flow on Paseo: creator deposits funding, investors receive fractional shares calculated in PAS tokens.</p>
+      <form id="flowForm">
+        <div class="field-group">
+          <label for="initialAmount">Project funding (PAS, default 1000)</label>
+          <input id="initialAmount" name="initialAmount" type="number" min="1" step="1" placeholder="1000" />
+        </div>
+        <div class="field-group">
+          <label for="requestedTokens">Investor share allocation (PAS, default 20 = 2%)</label>
+          <input id="requestedTokens" name="requestedTokens" type="number" min="1" step="1" placeholder="20" />
+        </div>
+        <div class="field-group">
+          <label for="flowNotes">Revenue share notes (optional)</label>
+          <textarea id="flowNotes" name="flowNotes" placeholder="Example: 20 PAS represents 2% ownership, entitling investor to 2% of all quarterly revenue distributions."></textarea>
+        </div>
+        <div class="form-actions">
+          <button class="cta-button" type="submit">Run creator → platform → investor shares</button>
+          <button class="subtle-button" type="button" onclick="loadMetadata()">View IP records</button>
+        </div>
+        <div id="flowMessage"></div>
+      </form>
+    </section>
+
+    <section class="stacked-section" id="metadata-log">
+      <h2 class="section-heading">On-chain IP registry</h2>
+      <p class="section-subtitle">Review registered intellectual property records. Each entry creates an immutable timestamp proving project ownership before fundraising.</p>
+      <div id="metadataEntries" class="grid-cards"></div>
+    </section>
+
+    <footer>© 2025 Zipa · Paseo Impact Investing Testbed · Blockchain-backed revenue sharing at zipa.polkadot</footer>
+  </div>
+
+  <script>
+    const walletPreview = document.getElementById('walletPreview');
+    const balancesPanel = document.getElementById('balancesPanel');
+    const metadataEntries = document.getElementById('metadataEntries');
+    const metadataMessage = document.getElementById('metadataMessage');
+    const flowMessage = document.getElementById('flowMessage');
+
+    function scrollToSection(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    function showMessage(container, text, type = 'success') {
+      if (!container) return;
+      container.innerHTML = `<div class="message ${type}">${text}</div>`;
+      setTimeout(() => {
+        container.innerHTML = '';
+      }, 8000);
+    }
+
+    function formatWalletPreview(data) {
+      return [
+        {
+          label: 'Creator Wallet //1',
+          ...data.creator
+        },
+        {
+          label: 'Platform Pool //0',
+          ...data.platform
+        },
+        {
+          label: 'Investor Shares //2',
+          ...data.lender
+        }
+      ];
+    }
+
+    async function loadBalances() {
+      walletPreview.innerHTML = '<li>Querying API…</li>';
+      balancesPanel.innerHTML = '';
+
+      try {
+        const response = await fetch('/wallets');
+        if (!response.ok) throw new Error('Unable to fetch balances');
+        const data = await response.json();
+        const formatted = formatWalletPreview(data);
+
+        walletPreview.innerHTML = formatted.map(wallet => `
+          <li>
+            <span style="color: var(--text-primary); font-weight: 600;">${wallet.label}</span>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">${wallet.balancePas} PAS</span>
+          </li>
+        `).join('');
+
+        balancesPanel.innerHTML = formatted.map(wallet => `
+          <div class="balance-tile">
+            <span class="balance-label">${wallet.label}</span>
+            <span class="balance-value">${wallet.balancePas} PAS</span>
+            <span class="balance-address">${wallet.address}</span>
+          </div>
+        `).join('');
+      } catch (error) {
+        walletPreview.innerHTML = `<li style="color: #ffb3b8;">${error.message}</li>`;
+      }
+    }
+
+    async function loadMetadata() {
+      metadataEntries.innerHTML = '';
+      try {
+        const response = await fetch('/metadata');
+        if (!response.ok) throw new Error('Unable to load metadata');
+        const { entries } = await response.json();
+
+        if (!entries || entries.length === 0) {
+          metadataEntries.innerHTML = '<p style="color: var(--text-muted);">No records yet.</p>';
+          return;
+        }
+
+        metadataEntries.innerHTML = entries.slice(-6).reverse().map((entry) => {
+          const txSection = entry.txRefs && entry.txRefs.length
+            ? `<div class="tx-links">
+                <h5>On-chain transactions</h5>
+                <ul>
+                  ${entry.txRefs.map((tx) => {
+                    const hash = tx.hash || tx.txHash;
+                    if (!hash) {
+                      return '<li><div>No transaction hash available.</div></li>';
+                    }
+                    const url = tx.explorerUrl || `https://paseo.subscan.io/extrinsic/${hash}`;
+                    const label = tx.label || 'Transaction';
+                    return `
+                      <li>
+                        <div><strong>${label}</strong></div>
+                        <div class="tx-hash">${hash}</div>
+                        <a href="${url}" target="_blank" rel="noopener">View on Subscan</a>
+                      </li>
+                    `;
+                  }).join('')}
+                </ul>
+              </div>`
+            : '';
+
+          return `
+            <article class="card" style="background: var(--color-muted);">
+              <h4 style="color: var(--color-primary);">Record #${entry.id}</h4>
+              <p style="color: var(--color-secondary); font-size: 0.84rem; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 12px;">${new Date(entry.timestamp).toLocaleString()}</p>
+              <pre style="white-space: pre-wrap; font-family: 'Geist Mono', monospace; font-size: 0.8rem; color: var(--text-muted);">${JSON.stringify(entry.metadata, null, 2)}</pre>
+              ${txSection}
+            </article>
+          `;
+        }).join('');
+      } catch (error) {
+        metadataEntries.innerHTML = `<p style="color: #ffb3b8;">${error.message}</p>`;
+      }
+    }
+
+    async function submitMetadata(payload) {
+      const response = await fetch('/metadata', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        const { error } = await response.json();
+        throw new Error(error || 'Error while storing metadata');
+      }
+
+      return response.json();
+    }
+
+    document.getElementById('metadataForm').addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const payload = {
+        projectName: document.getElementById('projectName').value.trim(),
+        projectSummary: document.getElementById('projectSummary').value.trim(),
+      };
+
+      try {
+        await submitMetadata(payload);
+        showMessage(metadataMessage, 'Metadata saved successfully.');
+        event.target.reset();
+        await loadMetadata();
+      } catch (error) {
+        showMessage(metadataMessage, error.message, 'error');
+      }
+    });
+
+    function resetMetadata() {
+      document.getElementById('metadataForm').reset();
+      metadataMessage.innerHTML = '';
+    }
+
+    document.getElementById('flowForm').addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const metadataNotes = document.getElementById('flowNotes').value.trim();
+      const initialAmount = parseInt(document.getElementById('initialAmount').value, 10) || undefined;
+      const requestedTokens = parseInt(document.getElementById('requestedTokens').value, 10) || undefined;
+
+      const payload = {
+        metadata: metadataNotes ? { notes: metadataNotes } : undefined,
+        initialAmount,
+        requestedTokens,
+      };
+
+      flowMessage.innerHTML = '<div class="message">Executing the Paseo flow…</div>';
+
+      try {
+        const response = await fetch('/flow', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) {
+          const { error } = await response.json();
+          throw new Error(error || 'Error while executing flow');
+        }
+
+        const summary = await response.json();
+        const { steps } = summary;
+        const { initialTransfer, secondaryTransfer } = steps;
+
+        const linkMarkup = (label, tx) => {
+          const hash = tx.txHash || tx.hash;
+          if (!hash) return '';
+          const short = `${hash.slice(0, 10)}…${hash.slice(-6)}`;
+          const url = `https://paseo.subscan.io/extrinsic/${hash}`;
+          return `<div>${label}: <a href="${url}" target="_blank" rel="noopener">${short}</a></div>`;
+        };
+
+        showMessage(
+          flowMessage,
+          `Revenue-sharing flow complete.<br>${linkMarkup('Creator → Platform', initialTransfer)}${linkMarkup('Platform → Investor', secondaryTransfer)}`
+        );
+        await Promise.all([loadBalances(), loadMetadata()]);
+      } catch (error) {
+        showMessage(flowMessage, error.message, 'error');
+      }
+    });
+
+    loadBalances();
+    loadMetadata();
+  </script>
+</body>
+</html>
