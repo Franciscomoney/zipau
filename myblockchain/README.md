@@ -9,8 +9,6 @@ This service manages the blockchain layer for Zipa's impact investing platform:
 - Executes revenue-sharing flows between creator, platform, and investor wallets
 - Tracks all transactions on Paseo testnet with Subscan explorer links
 
-**Live Service:** http://51.178.253.51:2021/
-
 ## Features
 
 - **IP Registration:** Submit project metadata to create immutable on-chain records
@@ -33,6 +31,8 @@ cp .env.example .env  # Add your ZIPA_ROOT_SEED
 node src/server.js
 ```
 
+The service will start on `http://localhost:2021` (or the PORT specified in .env).
+
 ## API Endpoints
 
 - `GET /health` - Service health check
@@ -49,4 +49,4 @@ node src/server.js
 - `ZIPA_ROOT_SEED` - Mnemonic for wallet derivation
 - `ESCROW_WALLET_SEED` - Alternative seed source
 
-See running service for full API documentation.
+Visit `http://localhost:2021` after starting the server to access the web interface and full API documentation.
