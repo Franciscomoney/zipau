@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #0f1f2f;
+  --color-primary: #005b7f;
+  --color-secondary: #f4a51c;
+  --color-accent: #0097a7;
+  --color-muted: #f3f6fb;
+  --color-border: #e1e7f0;
+  --radius-card: 28px;
+  --shadow-soft: 0 16px 40px rgba(15, 31, 47, 0.08);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--color-primary);
+  --color-secondary: var(--color-secondary);
+  --color-accent: var(--color-accent);
+  --color-muted: var(--color-muted);
+  --color-border: var(--color-border);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), "Helvetica Neue", Arial, sans-serif;
+  letter-spacing: -0.01em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: var(--foreground);
+}
+
+.container {
+  width: min(1120px, 100%);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+.premium-card {
+  border-radius: var(--radius-card);
+  border: 1px solid color-mix(in srgb, var(--color-border) 92%, transparent);
+  background: white;
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(12px);
+}
