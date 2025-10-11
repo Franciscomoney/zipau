@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import CircleSlider from './CircleSlider';
+import RiskRatingSlider from './RiskRatingSlider';
 
 interface ProjectData {
   title: string;
@@ -10,6 +11,7 @@ interface ProjectData {
   targetAmount: number;
   raisedAmount: number;
   minimumInvestment: number;
+  riskRating: number;
 }
 
 interface PaymentModalProps {
@@ -157,6 +159,11 @@ export default function PaymentModal({ isOpen, onClose, project }: PaymentModalP
                       €{estimatedQuarterlyIncome.toLocaleString()}
                     </p>
                   </div>
+                </div>
+
+                {/* Risk Rating Slider */}
+                <div className="rounded-2xl border border-slate-200 bg-white p-6">
+                  <RiskRatingSlider riskRating={project.riskRating} />
                 </div>
 
                 <div className="rounded-2xl border border-slate-200 bg-white p-6">
