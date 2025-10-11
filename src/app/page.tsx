@@ -79,7 +79,7 @@ function HighlightOpportunity({ opportunity }: { opportunity: Opportunity }) {
             {opportunity.description}
           </p>
         </div>
-        <div className="grid gap-4 sm:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2">
           <div className="rounded-2xl border border-[--color-border]/70 bg-[--color-muted] px-5 py-4">
             <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Raise target</p>
             <p className="mt-2 text-lg font-semibold text-[--color-primary]">
@@ -92,29 +92,15 @@ function HighlightOpportunity({ opportunity }: { opportunity: Opportunity }) {
               {opportunity.apr}
             </p>
           </div>
-          <div className="rounded-2xl border border-[--color-border]/70 bg-[--color-muted] px-5 py-4">
-            <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Lead partner</p>
-            <p className="mt-2 text-sm font-semibold text-slate-700">
-              {opportunity.lead}
-            </p>
-          </div>
         </div>
         <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex items-center gap-4">
-            <div className="relative h-16 w-16 rounded-full" style={progressRingStyle}>
-              <div className="absolute inset-[6px] flex items-center justify-center rounded-full bg-white shadow-sm">
-                <span className="text-sm font-semibold text-[--color-primary]">
+            <div className="relative h-28 w-28 rounded-full" style={progressRingStyle}>
+              <div className="absolute inset-[8px] flex items-center justify-center rounded-full bg-white shadow-sm">
+                <span className="text-xl font-semibold text-[--color-primary]">
                   {opportunity.progress}%
                 </span>
               </div>
-            </div>
-            <div className="max-w-xs">
-              <p className="text-xs uppercase tracking-[0.18em] text-slate-500">
-                Funding progress
-              </p>
-              <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                {opportunity.lead}
-              </p>
             </div>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row">
@@ -212,9 +198,9 @@ export default function Home() {
             <button className="hidden rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-[--color-primary] hover:text-[--color-primary] lg:block">
               Sign in
             </button>
-            <button className="rounded-lg bg-[--color-primary] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-cyan-500/20 transition hover:bg-[--color-primary]/90">
+            <Link href="/start-investing" className="rounded-lg bg-[--color-primary] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-cyan-500/20 transition hover:bg-[--color-primary]/90">
               Start investing
-            </button>
+            </Link>
           </div>
         </div>
       </header>
@@ -235,12 +221,12 @@ export default function Home() {
                 Support incredible social projects and earn a share of their success. Discover passionate creators, invest in their future revenue, and receive quarterly dividends.
               </p>
               <div className="flex flex-col gap-3 sm:flex-row">
-                <button className="inline-flex items-center justify-center gap-2 rounded-full bg-[--color-secondary] px-8 py-4 text-base font-semibold text-slate-900 shadow-lg shadow-amber-300/30 transition hover:shadow-amber-300/50">
+                <Link href="/start-investing" className="inline-flex items-center justify-center gap-2 rounded-full bg-[--color-secondary] px-8 py-4 text-base font-semibold text-slate-900 shadow-lg shadow-amber-300/30 transition hover:shadow-amber-300/50">
                   Start investing
-                </button>
-                <button className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-slate-300 px-8 py-4 text-base font-semibold text-slate-700 transition hover:border-[--color-primary] hover:text-[--color-primary]">
-                  How it works
-                </button>
+                </Link>
+                <Link href="/launch-project" className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-slate-300 px-8 py-4 text-base font-semibold text-slate-700 transition hover:border-[--color-primary] hover:text-[--color-primary]">
+                  Launch your project
+                </Link>
               </div>
             </div>
             <div className="relative">
@@ -287,34 +273,10 @@ export default function Home() {
 
         <section id="opportunities" className="bg-[#f8fafc] py-20">
           <div className="container space-y-12">
-            <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-              <div className="space-y-3">
-                <p className="text-sm uppercase tracking-[0.28em] text-slate-500">
-                  Featured Opportunities
-                </p>
-                <h2 className="text-3xl font-semibold leading-tight">
-                  Curated ventures delivering measurable social returns.
-                </h2>
-                <p className="max-w-2xl text-sm leading-relaxed text-slate-600">
-                  Explore Bank of Cyprus–aligned creators turning intellectual property into
-                  inclusive growth. Each raise includes vetted diligence, transparent waterfall
-                  terms, and quarterly dividend expectations.
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-3">
-                {filters.map((filter) => (
-                  <button
-                    key={filter}
-                    className={`rounded-full px-5 py-2 text-sm font-medium transition ${
-                      filter === "All opportunities"
-                        ? "bg-[--color-primary] text-white shadow shadow-cyan-500/20"
-                        : "border border-slate-200 text-slate-600 hover:border-[--color-primary]/40 hover:text-[--color-primary]"
-                    }`}
-                  >
-                    {filter}
-                  </button>
-                ))}
-              </div>
+            <div>
+              <p className="text-sm uppercase tracking-[0.28em] text-slate-500">
+                Featured Opportunities
+              </p>
             </div>
             <div className="space-y-12">
               {opportunities.map((item) => (
@@ -370,45 +332,6 @@ export default function Home() {
                     As the project grows and generates income, you get a share. We&apos;ll send your quarterly dividends directly to your bank account. It&apos;s a simple, transparent way to be rewarded for your support.
                   </p>
                 </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="for-creators" className="bg-[#0f1f2f] py-20 text-white">
-          <div className="container">
-            <div className="max-w-4xl mx-auto text-center space-y-8">
-              <p className="text-sm uppercase tracking-[0.3em] text-teal-200">
-                For Creators
-              </p>
-              <h2 className="text-4xl font-semibold leading-tight">
-                Your Vision. Your Terms. Our Support.
-              </h2>
-              <p className="text-lg leading-relaxed text-slate-200">
-                Our platform is designed for social entrepreneurs like you. We understand your value isn&apos;t just in physical assets. Use your intellectual property—your unique ideas and methods—as collateral to secure the funding you need. No complicated loans, no loss of control. Just a fair partnership with a global community that believes in your mission.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-                <button className="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-6 py-3 text-sm font-semibold text-[--color-primary] transition hover:bg-slate-100">
-                  Learn More
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M4 11.5L11.5 4M11.5 4H5.5M11.5 4V10"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
-                <button className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/30 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10">
-                  Launch Your Project
-                </button>
               </div>
             </div>
           </div>
@@ -554,12 +477,12 @@ export default function Home() {
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
-            <button className="rounded-lg border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-[--color-primary] hover:text-[--color-primary] hover:bg-[--color-muted]">
+            <Link href="/#opportunities" className="rounded-lg border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-[--color-primary] hover:text-[--color-primary] hover:bg-[--color-muted]">
               Browse Projects
-            </button>
-            <button className="rounded-lg bg-[--color-secondary] px-5 py-2.5 text-sm font-semibold text-slate-900 shadow-lg shadow-amber-300/30 transition hover:shadow-amber-300/50">
+            </Link>
+            <Link href="/start-investing" className="rounded-lg bg-[--color-secondary] px-5 py-2.5 text-sm font-semibold text-slate-900 shadow-lg shadow-amber-300/30 transition hover:shadow-amber-300/50">
               Get Started
-            </button>
+            </Link>
           </div>
         </div>
       </footer>
