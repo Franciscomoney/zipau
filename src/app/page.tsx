@@ -193,6 +193,9 @@ export default function Home() {
             <Link href="#why-choose-us" className="hover:text-[--color-primary]">
               Why Choose Us
             </Link>
+            <Link href="/dashboard" className="hover:text-[--color-primary]">
+              Dashboard
+            </Link>
           </nav>
           <div className="flex items-center gap-3">
             <button className="hidden rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-[--color-primary] hover:text-[--color-primary] lg:block">
