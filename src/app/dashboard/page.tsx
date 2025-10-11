@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import RiskRatingSlider from '@/components/RiskRatingSlider';
+import InvestmentGraph from '@/components/InvestmentGraph';
 
 interface Investment {
   id: string;
@@ -187,6 +188,11 @@ export default function DashboardPage() {
               </div>
               <p className="text-2xl font-bold text-purple-600">€{totalPaid.toLocaleString()}</p>
             </div>
+          </div>
+
+          {/* Investment Performance Graph */}
+          <div className="mb-8">
+            <InvestmentGraph investments={investments} />
           </div>
 
           {/* Investments List */}
