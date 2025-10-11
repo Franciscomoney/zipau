@@ -1,0 +1,31 @@
+{
+  "counter": 4,
+  "records": [
+    {
+      "id": 1,
+      "timestamp": "2025-10-11T15:24:46.824Z",
+      "metadata": {
+        "projectName": "maria",
+        "projectSummary": "the project"
+      },
+      "txRefs": []
+    },
+    {
+      "id": 2,
+      "timestamp": "2025-10-11T15:24:57.182Z",
+      "metadata": {
+        "notes": "talks"
+      },
+      "txRefs": []
+    },
+    {
+      "id": 3,
+      "timestamp": "2025-10-11T15:43:20.647Z",
+      "metadata": {
+        "projectName": "Maria olive furniture",
+        "projectSummary": "Pit-board is a bio-panel made from discarded olive pits, transforming waste into a durable and premium surface. Each panel is crafted with a unique recipe, offering a distinctive finish and character using four distinct pit sizes after passing through an industrial sieve.\n\nhttps://pit-to-table.com/product1/"
+      },
+      "txRefs": []
+    }
+  ]
+}
