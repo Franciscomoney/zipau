@@ -57,7 +57,12 @@ export default function MariaPage() {
           <Link href="/" className="text-sm font-semibold text-[--color-primary]">
             ← Back to opportunities
           </Link>
-          <span className="text-xs uppercase tracking-[0.28em] text-slate-500">Circular furniture</span>
+          <div className="flex items-center gap-4">
+            <Link href="/dashboard" className="text-sm font-semibold text-slate-600 hover:text-[--color-primary]">
+              Dashboard
+            </Link>
+            <span className="text-xs uppercase tracking-[0.28em] text-slate-500">Circular furniture</span>
+          </div>
         </div>
       </header>
 
