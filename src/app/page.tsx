@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import RiskRatingSlider from "@/components/RiskRatingSlider";
 
 const opportunities = [
   {
@@ -14,6 +15,7 @@ const opportunities = [
     lead: "Lead partner: Limassol Circular Cooperative",
     image: "/generated/2025-10-11_07-13-39-081.webp",
     slug: "maria",
+    riskRating: 7, // Low-Medium Risk
   },
   {
     title: "Greece: Eco-Corridor Gallikos Delta",
@@ -27,6 +29,7 @@ const opportunities = [
     lead: "Lead supporters: Aegean Impact Reserve",
     image: "/generated/2025-10-11_07-13-58-156.webp",
     slug: "gallikos",
+    riskRating: 4, // Medium Risk
   },
   {
     title: "Colombia: SiembraViva",
@@ -40,6 +43,7 @@ const opportunities = [
     lead: "Institutional partner: Andean Resilience Fund",
     image: "/generated/2025-10-11_07-14-16-234.webp",
     slug: "siembraviva",
+    riskRating: 6, // Medium Risk
   },
 ];
 
@@ -62,23 +66,38 @@ function HighlightOpportunity({ opportunity }: { opportunity: Opportunity }) {
 
   return (
     <article className="premium-card overflow-hidden p-0 lg:grid lg:grid-cols-[1.05fr_1fr]">
-      <div className="space-y-8 p-8 sm:p-10 lg:p-12">
-        <div className="flex flex-wrap items-center gap-3">
-          <span className="rounded-full bg-[--color-muted] px-4 py-1 text-[11px] font-semibold uppercase tracking-widest text-[--color-primary]">
-            {opportunity.region}
-          </span>
-          <span className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">
-            {opportunity.sector}
-          </span>
+      <div className="space-y-6 p-8 sm:p-10 lg:p-12">
+        {/* Header with region, sector, and progress circle */}
+        <div className="flex items-start justify-between">
+          <div className="flex flex-wrap items-center gap-3">
+            <span className="rounded-full bg-[--color-muted] px-4 py-1 text-[11px] font-semibold uppercase tracking-widest text-[--color-primary]">
+              {opportunity.region}
+            </span>
+            <span className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">
+              {opportunity.sector}
+            </span>
+          </div>
+          {/* Progress circle moved to header */}
+          <div className="relative h-16 w-16 rounded-full flex-shrink-0" style={progressRingStyle}>
+            <div className="absolute inset-[4px] flex items-center justify-center rounded-full bg-white shadow-sm">
+              <span className="text-sm font-semibold text-[--color-primary]">
+                {opportunity.progress}%
+              </span>
+            </div>
+          </div>
         </div>
-        <div className="space-y-4">
-          <h3 className="text-3xl font-semibold leading-tight text-[--color-primary] sm:text-4xl">
+
+        {/* Title and description */}
+        <div className="space-y-3">
+          <h3 className="text-2xl font-semibold leading-tight text-[--color-primary] sm:text-3xl">
             {opportunity.title}
           </h3>
           <p className="text-base leading-relaxed text-slate-600 sm:text-lg">
             {opportunity.description}
           </p>
         </div>
+
+        {/* Key metrics grid */}
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="rounded-2xl border border-[--color-border]/70 bg-[--color-muted] px-5 py-4">
             <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Raise target</p>
@@ -93,45 +112,39 @@ function HighlightOpportunity({ opportunity }: { opportunity: Opportunity }) {
             </p>
           </div>
         </div>
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-          <div className="flex items-center gap-4">
-            <div className="relative h-28 w-28 rounded-full" style={progressRingStyle}>
-              <div className="absolute inset-[8px] flex items-center justify-center rounded-full bg-white shadow-sm">
-                <span className="text-xl font-semibold text-[--color-primary]">
-                  {opportunity.progress}%
-                </span>
-              </div>
-            </div>
-          </div>
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <Link
-              href={`/${opportunity.slug}`}
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-[--color-primary] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[--color-primary]/90"
+        
+        {/* Risk Rating Slider */}
+        <RiskRatingSlider riskRating={opportunity.riskRating} />
+
+        {/* Action buttons */}
+        <div className="flex flex-col gap-3 sm:flex-row">
+          <Link
+            href={`/${opportunity.slug}`}
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-[--color-primary] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[--color-primary]/90"
+          >
+            View project details
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              View project details
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M4 11.5L11.5 4M11.5 4H5.5M11.5 4V10"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </Link>
-            <Link
-              href={`/${opportunity.slug}`}
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-500 px-6 py-3 text-sm font-semibold text-white transition hover:bg-emerald-600"
-            >
-              Invest
-            </Link>
-          </div>
+              <path
+                d="M4 11.5L11.5 4M11.5 4H5.5M11.5 4V10"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </Link>
+          <Link
+            href={`/${opportunity.slug}`}
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-500 px-6 py-3 text-sm font-semibold text-white transition hover:bg-emerald-600"
+          >
+            Invest
+          </Link>
         </div>
       </div>
       <div className="relative isolate overflow-hidden">

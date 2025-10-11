@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import PaymentModal from "@/components/PaymentModal";
+import RiskRatingSlider from "@/components/RiskRatingSlider";
 
 const heroImage = "/generated/2025-10-11_07-13-39-081.webp";
 
@@ -48,6 +49,7 @@ export default function MariaPage() {
     targetAmount: 5000,
     raisedAmount: 2400,
     minimumInvestment: 10,
+    riskRating: 7,
   };
 
   return (
@@ -104,6 +106,24 @@ export default function MariaPage() {
               </div>
             </div>
             <aside className="space-y-6 rounded-[32px] border border-[--color-border]/70 bg-white p-8 shadow-xl lg:mt-[7.5rem]">
+              {/* Header with title and progress circle */}
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-[--color-primary]">Investment Details</h3>
+                <div className="relative h-16 w-16 rounded-full" style={{
+                  background: `conic-gradient(var(--color-primary) ${progress * 3.6}deg, rgba(15, 31, 47, 0.12) ${progress * 3.6}deg)`,
+                }}>
+                  <div className="absolute inset-[4px] flex items-center justify-center rounded-full bg-white shadow-sm">
+                    <span className="text-sm font-semibold text-[--color-primary]">
+                      {progress}%
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Risk Rating Slider */}
+              <RiskRatingSlider riskRating={projectData.riskRating} />
+              
+              {/* Funding progress details */}
               <div className="space-y-3">
                 <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">
                   <span>Funding progress</span>
