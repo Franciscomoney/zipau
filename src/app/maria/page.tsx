@@ -1,5 +1,9 @@
+'use client';
+
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
+import PaymentModal from "@/components/PaymentModal";
 
 const heroImage = "/generated/2025-10-11_07-13-39-081.webp";
 
@@ -32,9 +36,19 @@ const useOfFunds = [
 ];
 
 export default function MariaPage() {
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const goalAmount = 5000;
   const raisedAmount = 2400;
   const progress = Math.round((raisedAmount / goalAmount) * 100);
+
+  const projectData = {
+    title: "Maria's Olive Loop Furniture",
+    slug: "maria",
+    revenueShare: 20,
+    targetAmount: 5000,
+    raisedAmount: 2400,
+    minimumInvestment: 10,
+  };
 
   return (
     <div className="min-h-screen bg-white pb-24">
@@ -108,7 +122,10 @@ export default function MariaPage() {
                   </div>
                 ))}
               </div>
-              <button className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-emerald-500 px-8 py-4 text-base font-semibold text-white transition hover:bg-emerald-600">
+              <button
+                onClick={() => setIsPaymentModalOpen(true)}
+                className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-emerald-500 px-8 py-4 text-base font-semibold text-white transition hover:bg-emerald-600"
+              >
                 Invest
               </button>
               <p className="text-xs leading-relaxed text-slate-500">
@@ -188,6 +205,12 @@ export default function MariaPage() {
           </div>
         </section>
       </main>
+
+      <PaymentModal
+        isOpen={isPaymentModalOpen}
+        onClose={() => setIsPaymentModalOpen(false)}
+        project={projectData}
+      />
     </div>
   );
 }
