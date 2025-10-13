@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
       subscription_id: result.subscriptionId,
       journey_id: journeyId,
       timestamp: timestamp,
-      redirect_url: `https://sandbox-apis.bankofcyprus.com/df-boc-org-sb/sb/psd2/oauth2/authorize?response_type=code&redirect_uri=${encodeURIComponent(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:2020'}/bank-success`)}&scope=UserOAuth2Security&client_id=e0aa7524ace12e4d901818d5501a1a49&subscriptionid=${result.subscriptionId}`
+      redirect_url: `https://sandbox-apis.bankofcyprus.com/df-boc-org-sb/sb/psd2/oauth2/authorize?response_type=code&redirect_uri=${encodeURIComponent('http://localhost:2020/bank-success')}&scope=UserOAuth2Security&client_id=e0aa7524ace12e4d901818d5501a1a49&subscriptionid=${result.subscriptionId}`
     });
 
   } catch (error) {

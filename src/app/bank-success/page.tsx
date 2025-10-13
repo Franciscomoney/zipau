@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
-export default function BankSuccessPage() {
+function BankSuccessContent() {
   const [isLoading, setIsLoading] = useState(true);
   const [connectionData, setConnectionData] = useState({
     subscriptionId: '',
@@ -17,6 +17,14 @@ export default function BankSuccessPage() {
   const subscriptionId = searchParams.get('subscriptionid');
 
   useEffect(() => {
+    // If accessing from localhost, redirect to server URL with all query params
+    if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
+      const searchString = window.location.search;
+      const serverUrl = `http://localhost:2020/bank-success${searchString}`;
+      window.location.href = serverUrl;
+      return;
+    }
+
     // Simulate loading time for better UX
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -29,7 +37,7 @@ export default function BankSuccessPage() {
         code,
         timestamp: new Date().toISOString()
       };
-      
+
       setConnectionData(connectionInfo);
       localStorage.setItem('boc_connection_success', JSON.stringify(connectionInfo));
       localStorage.setItem('boc_connected', 'true');
@@ -224,5 +232,22 @@ export default function BankSuccessPage() {
         </div>
       </main>
     </div>
+  );
+}
+
+export default function BankSuccessPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-blue-50 to-cyan-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-6">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600"></div>
+          </div>
+          <h2 className="text-2xl font-semibold text-slate-900 mb-2">Loading...</h2>
+        </div>
+      </div>
+    }>
+      <BankSuccessContent />
+    </Suspense>
   );
 }

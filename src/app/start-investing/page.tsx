@@ -1,10 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 
-export default function StartInvestingPage() {
+function StartInvestingContent() {
   const [isConnecting, setIsConnecting] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [error, setError] = useState('');
@@ -109,10 +110,10 @@ export default function StartInvestingPage() {
 
       // Step 3: Redirect to Bank of Cyprus authorization
       setConnectionStep('redirecting');
-      
-      const redirectUri = `${window.location.origin}/bank-success`;
+
+      const redirectUri = 'http://localhost:2020/bank-success';
       const authUrl = `https://sandbox-apis.bankofcyprus.com/df-boc-org-sb/sb/psd2/oauth2/authorize?response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&scope=UserOAuth2Security&client_id=e0aa7524ace12e4d901818d5501a1a49&subscriptionid=${subscriptionResult.subscription_id}`;
-      
+
       // Redirect to Bank of Cyprus
       window.location.href = authUrl;
 
@@ -170,28 +171,21 @@ export default function StartInvestingPage() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <header className="border-b border-slate-200 bg-white/70 backdrop-blur-xl">
-        <div className="container flex items-center justify-between py-6">
+      <header className="border-b border-[--color-border]/70 bg-white/60 backdrop-blur-xl">
+        <div className="container flex items-center justify-between py-3">
           <Link href="/" className="flex items-center gap-3">
-            <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 via-cyan-500 to-teal-500 text-lg font-semibold text-white">
-              Z
-            </span>
-            <div>
-              <p className="text-lg font-semibold">Zipa</p>
-              <p className="text-sm text-slate-500">Start Investing</p>
-            </div>
+            <Image
+              src="/zipa-logo-horizontal.png"
+              alt="Zipa - Decentralized Bank"
+              width={160}
+              height={50}
+              className="object-contain"
+              priority
+            />
           </Link>
-          <nav className="hidden items-center gap-6 text-sm font-medium text-slate-600 lg:flex">
-            <Link href="/" className="hover:text-blue-600">
-              Browse Projects
-            </Link>
-            <Link href="/dashboard" className="hover:text-blue-600">
-              Dashboard
-            </Link>
-            <button className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-blue-500 hover:text-blue-600">
-              Sign out
-            </button>
-          </nav>
+          <Link href="/dashboard" className="rounded-lg border-2 border-slate-900 bg-slate-900 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800 hover:border-slate-800">
+            Login
+          </Link>
         </div>
       </header>
 
@@ -511,5 +505,20 @@ export default function StartInvestingPage() {
         </div>
       </main>
     </div>
+  );
+}
+
+export default function StartInvestingPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-slate-600">Loading...</p>
+        </div>
+      </div>
+    }>
+      <StartInvestingContent />
+    </Suspense>
   );
 }
