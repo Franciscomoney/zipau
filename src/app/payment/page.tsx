@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import CircleSlider from '@/components/CircleSlider';
@@ -16,7 +16,7 @@ interface ProjectData {
   riskRating: number;
 }
 
-export default function PaymentPage() {
+function PaymentPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const projectSlug = searchParams.get('project') || 'maria';
@@ -304,5 +304,17 @@ export default function PaymentPage() {
         </div>
       </main>
     </div>
+  );
+}
+
+export default function PaymentPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[--color-primary]"></div>
+      </div>
+    }>
+      <PaymentPageContent />
+    </Suspense>
   );
 }

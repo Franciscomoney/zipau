@@ -106,28 +106,26 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <header className="border-b border-slate-200 bg-white/70 backdrop-blur-xl">
-        <div className="container flex items-center justify-between py-6">
+      <header className="border-b border-[--color-border]/70 bg-white/60 backdrop-blur-xl">
+        <div className="container flex items-center justify-between py-3">
           <Link href="/" className="flex items-center gap-3">
-            <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 via-cyan-500 to-teal-500 text-lg font-semibold text-white">
-              Z
-            </span>
-            <div>
-              <p className="text-lg font-semibold">Zipa</p>
-              <p className="text-sm text-slate-500">Investor Dashboard</p>
-            </div>
+            <Image
+              src="/zipa-logo-horizontal.png"
+              alt="Zipa - Decentralized Bank"
+              width={160}
+              height={50}
+              className="object-contain"
+              priority
+            />
           </Link>
-          <nav className="hidden items-center gap-6 text-sm font-medium text-slate-600 lg:flex">
-            <Link href="/" className="hover:text-blue-600">
+          <div className="flex items-center gap-4">
+            <Link href="/" className="text-sm font-medium text-slate-600 hover:text-[--color-primary] transition-colors">
               Browse Projects
             </Link>
-            <Link href="/dashboard" className="text-blue-600 font-semibold">
-              Dashboard
-            </Link>
-            <button className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-blue-500 hover:text-blue-600">
+            <button className="rounded-lg border-2 border-slate-900 bg-slate-900 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800 hover:border-slate-800">
               Sign out
             </button>
-          </nav>
+          </div>
         </div>
       </header>
 

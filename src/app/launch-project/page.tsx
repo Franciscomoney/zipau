@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 
 export default function LaunchProjectPage() {
@@ -43,12 +44,21 @@ export default function LaunchProjectPage() {
 
   return (
     <div className="min-h-screen bg-white pb-24">
-      <header className="border-b border-[--color-border]/70 bg-white/70 backdrop-blur-xl">
-        <div className="container flex items-center justify-between py-6">
-          <Link href="/" className="text-sm font-semibold text-[--color-primary]">
-            ← Back to home
+      <header className="border-b border-[--color-border]/70 bg-white/60 backdrop-blur-xl">
+        <div className="container flex items-center justify-between py-3">
+          <Link href="/" className="flex items-center gap-3">
+            <Image
+              src="/zipa-logo-horizontal.png"
+              alt="Zipa - Decentralized Bank"
+              width={160}
+              height={50}
+              className="object-contain"
+              priority
+            />
           </Link>
-          <span className="text-xs uppercase tracking-[0.28em] text-slate-500">Launch your project</span>
+          <Link href="/dashboard" className="rounded-lg border-2 border-slate-900 bg-slate-900 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800 hover:border-slate-800">
+            Login
+          </Link>
         </div>
       </header>
 

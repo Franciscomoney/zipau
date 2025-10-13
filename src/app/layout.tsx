@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Zipa | Invest in Social Impact",
+  title: "Zipa | Stablecoin Bank for IP-Backed Investments",
   description:
-    "Zipa connects global backers with social impact creators, delivering premium crowdfunding opportunities backed by future revenue sharing.",
+    "Invest globally with USDT/USDC in projects backed by intellectual property. Acquire real equity shares, receive quarterly dividends. No banks, no borders, instant settlement.",
 };
 
 export default function RootLayout({
