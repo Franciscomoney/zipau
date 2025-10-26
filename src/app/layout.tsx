@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Zipa | Stablecoin Bank for IP-Backed Investments",
+  title: "Zipa | Global Lending Platform for Creative IP",
   description:
-    "Invest globally with USDT/USDC in projects backed by intellectual property. Acquire real equity shares, receive quarterly dividends. No banks, no borders, instant settlement.",
+    "Borrow against your music masters or lend to artists worldwide. Earn 20-50% APR in stablecoins. IP-backed DeFi lending powered by X402 protocol. No banks, no borders.",
 };
 
 export default function RootLayout({

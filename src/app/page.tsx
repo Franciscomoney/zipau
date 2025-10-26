@@ -2,70 +2,73 @@ import Link from "next/link";
 import Image from "next/image";
 import RiskRatingSlider from "@/components/RiskRatingSlider";
 
-const opportunities = [
+const loanOpportunities = [
   {
-    title: "Cyprus: Maria's Olive Loop Furniture",
+    title: "Kenya: Motif's Afrobeats Catalog",
     description:
-      "Circular studio turning olive pits, pomace, and pruning waste into heirloom furniture for boutique hotels and design-forward homes.",
-    region: "Cyprus",
-    sector: "Circular Design",
-    raise: "€5,000 target",
-    progress: 48,
-    apr: "20% equity share",
-    lead: "Lead partner: Limassol Circular Cooperative",
-    image: "/generated/2025-10-11_07-13-39-081.webp",
-    slug: "maria",
-    riskRating: 7, // Low-Medium Risk
-    ipCollateral: "Circular Design Patent + Brand Trademark",
-    dividendSchedule: "Quarterly starting Month 4",
-  },
-  {
-    title: "Greece: Eco-Corridor Gallikos Delta",
-    description:
-      "Restoring the Gallikos River Delta with pollution mitigation, biodiversity labs, and school programs built on proprietary eco-mapping IP.",
-    region: "Greece",
-    sector: "Climate Infrastructure",
-    raise: "€25,000 target",
-    progress: 35,
-    apr: "15% equity share",
-    lead: "Lead supporters: Aegean Impact Reserve",
-    image: "/generated/2025-10-11_07-13-58-156.webp",
-    slug: "gallikos",
-    riskRating: 4, // Medium Risk
-    ipCollateral: "Eco-Mapping Algorithm + Biodiversity Database",
-    dividendSchedule: "Quarterly starting Month 6",
-  },
-  {
-    title: "Colombia: SiembraViva",
-    description:
-      "Digital marketplace connecting smallholder farmers directly with buyers, using traceability algorithms as collateral for growth capital.",
-    region: "Colombia",
-    sector: "AgriTech",
-    raise: "€100,000 target",
-    progress: 68,
-    apr: "10% equity share",
-    lead: "Institutional partner: Andean Resilience Fund",
-    image: "/generated/2025-10-11_07-14-16-234.webp",
-    slug: "siembraviva",
+      "Nairobi-based music producer with 8 released tracks earning $520/month from Spotify, Apple Music, and YouTube. Seeking capital to fund studio equipment and 2 music videos.",
+    region: "Kenya",
+    sector: "Music",
+    loanAmount: "$2,000",
+    progress: 62,
+    apr: "35% APR",
+    term: "18 months",
+    image: "/generated/kenya-motif-afrobeats.png",
+    slug: "motif",
     riskRating: 6, // Medium Risk
-    ipCollateral: "Traceability Algorithm + Platform Software",
-    dividendSchedule: "Quarterly starting Month 3",
+    ipCollateral: "8 Master Recordings + Producer Tag Rights",
+    repaymentSchedule: "Monthly payments of $135",
+    monthlyStreams: "85,000 streams/month",
+  },
+  {
+    title: "USA: Brooklyn Hip-Hop Producer Catalog",
+    description:
+      "Brooklyn-based producer with placements on major label albums, earning $1,200/month from beat sales and streaming. Borrowing to build professional studio and expand sample library.",
+    region: "United States",
+    sector: "Music",
+    loanAmount: "$5,000",
+    progress: 28,
+    apr: "25% APR",
+    term: "24 months",
+    image: "/generated/usa-brooklyn-hiphop-producer.png",
+    slug: "brooklyn-producer",
+    riskRating: 5, // Medium Risk
+    ipCollateral: "15 Beat Catalog + Producer Tag IP + Sample Pack Rights",
+    repaymentSchedule: "Monthly payments of $245",
+    monthlyStreams: "1.2M streams/month + $800 beat sales",
+  },
+  {
+    title: "Brazil: MC Favela's Catalog",
+    description:
+      "Brazilian funk artist with 200K monthly Spotify listeners and viral TikTok presence. Using master recordings as collateral to fund album production and tour.",
+    region: "Brazil",
+    sector: "Music",
+    loanAmount: "$3,500",
+    progress: 81,
+    apr: "30% APR",
+    term: "12 months",
+    image: "/generated/brazil-mc-favela-funk.png",
+    slug: "mcfavela",
+    riskRating: 7, // Low-Medium Risk
+    ipCollateral: "12 Master Recordings + Publishing Rights",
+    repaymentSchedule: "Monthly payments of $330",
+    monthlyStreams: "200K+ listeners, 850K streams/month",
   },
 ];
 
 const heroImage = "/generated/2025-10-11_07-21-55-293.webp";
 
 const filters = [
-  "All opportunities",
-  "Community wealth",
-  "Climate resilience",
-  "Inclusive tech",
+  "All loans",
+  "Music",
+  "Film & Video",
+  "Podcasts",
 ];
 
-type Opportunity = (typeof opportunities)[number];
+type LoanOpportunity = (typeof loanOpportunities)[number];
 
-function HighlightOpportunity({ opportunity }: { opportunity: Opportunity }) {
-  const progressDegrees = Math.max(0, Math.min(100, opportunity.progress)) * 3.6;
+function HighlightLoanOpportunity({ loan }: { loan: LoanOpportunity }) {
+  const progressDegrees = Math.max(0, Math.min(100, loan.progress)) * 3.6;
   const progressRingStyle = {
     background: `conic-gradient(var(--color-primary) ${progressDegrees}deg, rgba(15, 31, 47, 0.12) ${progressDegrees}deg)`,
   };
@@ -77,17 +80,17 @@ function HighlightOpportunity({ opportunity }: { opportunity: Opportunity }) {
         <div className="flex items-start justify-between">
           <div className="flex flex-wrap items-center gap-3">
             <span className="rounded-full bg-[--color-muted] px-4 py-1 text-[11px] font-semibold uppercase tracking-widest text-[--color-primary]">
-              {opportunity.region}
+              {loan.region}
             </span>
             <span className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">
-              {opportunity.sector}
+              {loan.sector}
             </span>
           </div>
           {/* Progress circle moved to header */}
           <div className="relative h-16 w-16 rounded-full flex-shrink-0" style={progressRingStyle}>
             <div className="absolute inset-[4px] flex items-center justify-center rounded-full bg-white shadow-sm">
               <span className="text-sm font-semibold text-[--color-primary]">
-                {opportunity.progress}%
+                {loan.progress}%
               </span>
             </div>
           </div>
@@ -96,25 +99,25 @@ function HighlightOpportunity({ opportunity }: { opportunity: Opportunity }) {
         {/* Title and description */}
         <div className="space-y-3">
           <h3 className="text-2xl font-semibold leading-tight text-[--color-primary] sm:text-3xl">
-            {opportunity.title}
+            {loan.title}
           </h3>
           <p className="text-base leading-relaxed text-slate-600 sm:text-lg">
-            {opportunity.description}
+            {loan.description}
           </p>
         </div>
 
         {/* Key metrics grid */}
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="rounded-2xl border border-[--color-border]/70 bg-[--color-muted] px-5 py-4">
-            <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Raise target</p>
+            <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Loan Amount</p>
             <p className="mt-2 text-lg font-semibold text-[--color-primary]">
-              {opportunity.raise}
+              {loan.loanAmount}
             </p>
           </div>
           <div className="rounded-2xl border border-[--color-border]/70 bg-[--color-muted] px-5 py-4">
-            <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Equity share</p>
+            <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Interest Rate</p>
             <p className="mt-2 text-lg font-semibold text-[--color-primary]">
-              {opportunity.apr}
+              {loan.apr}
             </p>
           </div>
           <div className="rounded-2xl border border-emerald-200/70 bg-emerald-50 px-5 py-4 sm:col-span-2">
@@ -125,27 +128,27 @@ function HighlightOpportunity({ opportunity }: { opportunity: Opportunity }) {
               IP Collateral
             </p>
             <p className="mt-2 text-sm font-semibold text-emerald-900">
-              {opportunity.ipCollateral}
+              {loan.ipCollateral}
             </p>
           </div>
           <div className="rounded-2xl border border-[--color-border]/70 bg-[--color-muted] px-5 py-4 sm:col-span-2">
-            <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Dividend schedule</p>
+            <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Repayment</p>
             <p className="mt-2 text-sm font-semibold text-[--color-primary]">
-              {opportunity.dividendSchedule}
+              {loan.repaymentSchedule}
             </p>
           </div>
         </div>
-        
+
         {/* Risk Rating Slider */}
-        <RiskRatingSlider riskRating={opportunity.riskRating} />
+        <RiskRatingSlider riskRating={loan.riskRating} />
 
         {/* Action buttons */}
         <div className="flex flex-col gap-3 sm:flex-row">
           <Link
-            href={`/${opportunity.slug}`}
+            href={`/${loan.slug}`}
             className="inline-flex items-center justify-center gap-2 rounded-full bg-[--color-primary] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[--color-primary]/90"
           >
-            View project details
+            View loan details
             <svg
               width="16"
               height="16"
@@ -163,17 +166,17 @@ function HighlightOpportunity({ opportunity }: { opportunity: Opportunity }) {
             </svg>
           </Link>
           <Link
-            href={`/${opportunity.slug}`}
+            href={`/${loan.slug}`}
             className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-500 px-6 py-3 text-sm font-semibold text-white transition hover:bg-emerald-600"
           >
-            Invest
+            Lend Now
           </Link>
         </div>
       </div>
       <div className="relative isolate overflow-hidden">
         <Image
-          src={opportunity.image}
-          alt={`${opportunity.title} visual`}
+          src={loan.image}
+          alt={`${loan.title} visual`}
           width={960}
           height={720}
           className="h-full w-full object-cover"
@@ -182,18 +185,17 @@ function HighlightOpportunity({ opportunity }: { opportunity: Opportunity }) {
         <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
         <div className="absolute bottom-8 left-8 flex flex-col gap-3 text-white">
           <span className="text-xs uppercase tracking-[0.24em] text-white/70">
-            Impact snapshot
+            Loan Metrics
           </span>
           <p className="max-w-sm text-sm leading-relaxed text-white/85">
-            Supported by {opportunity.lead}. Investors receive {opportunity.apr} with quarterly
-            reporting baked into the deal flow.
+            {loan.monthlyStreams}. Lenders earn {loan.apr} over {loan.term} with monthly repayments secured by IP collateral.
           </p>
           <div className="flex flex-wrap gap-2 text-xs font-semibold">
             <span className="rounded-full bg-white/20 px-3 py-1 backdrop-blur-sm">
-              {opportunity.raise}
+              {loan.loanAmount} loan
             </span>
             <span className="rounded-full bg-white/20 px-3 py-1 backdrop-blur-sm">
-              {opportunity.progress}% funded
+              {loan.progress}% funded
             </span>
           </div>
         </div>
@@ -231,21 +233,31 @@ export default function Home() {
             <div className="space-y-8">
               <div className="space-y-2">
                 <p className="text-sm font-medium text-[--color-primary]">
-                  Stablecoin Bank for IP-Backed Investments
+                  IP-Backed Credit for the Creative Economy
                 </p>
                 <h1 className="text-5xl font-bold leading-[1.1] tracking-tight text-[#0f1f2f] sm:text-6xl lg:text-7xl">
-                  Where IP Becomes Capital
+                  Banks Don&apos;t Lend to Artists. We Do.
                 </h1>
               </div>
-              <p className="max-w-xl text-lg leading-relaxed text-slate-600">
-                Invest globally with USDT or USDC. Acquire equity shares secured by intellectual property. Receive quarterly dividends automatically—no banks, no borders, no delays.
-              </p>
+              <div className="max-w-xl space-y-4">
+                <p className="text-lg leading-relaxed text-slate-600">
+                  Artists generate $110B annually but can't get loans—banks don't accept music masters as collateral.
+                </p>
+                <div className="space-y-2">
+                  <p className="text-base leading-relaxed text-slate-700">
+                    <span className="font-semibold text-[--color-primary]">If you're an artist:</span> Borrow against your IP. No credit checks.
+                  </p>
+                  <p className="text-base leading-relaxed text-slate-700">
+                    <span className="font-semibold text-[--color-primary]">If you're a lender:</span> Earn 20-50% APR in stablecoins with fractional NFT collateral.
+                  </p>
+                </div>
+              </div>
               <div className="flex flex-col gap-3 sm:flex-row">
                 <Link href="/start-investing" className="inline-flex items-center justify-center gap-2 rounded-full bg-[--color-secondary] px-8 py-4 text-base font-semibold text-slate-900 shadow-lg shadow-amber-300/30 transition hover:shadow-amber-300/50">
-                  Invest
+                  Start Lending
                 </Link>
                 <Link href="/launch-project" className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-slate-300 px-8 py-4 text-base font-semibold text-slate-700 transition hover:border-[--color-primary] hover:text-[--color-primary]">
-                  Raise
+                  Borrow Funds
                 </Link>
               </div>
             </div>
@@ -254,8 +266,8 @@ export default function Home() {
                 <div className="space-y-4">
                   <div className="overflow-hidden rounded-3xl shadow-xl">
                     <Image
-                      src={opportunities[0].image}
-                      alt="Maria's furniture workshop"
+                      src={loanOpportunities[0].image}
+                      alt="Kenyan music producer"
                       width={400}
                       height={300}
                       className="h-48 w-full object-cover"
@@ -268,8 +280,8 @@ export default function Home() {
                   <div className="h-24 w-24 rounded-3xl bg-gradient-to-br from-[--color-secondary]/30 to-[--color-secondary]/10" />
                   <div className="overflow-hidden rounded-3xl shadow-xl">
                     <Image
-                      src={opportunities[1].image}
-                      alt="Gallikos Delta restoration"
+                      src={loanOpportunities[1].image}
+                      alt="Brooklyn music producer"
                       width={400}
                       height={300}
                       className="h-48 w-full object-cover"
@@ -277,8 +289,8 @@ export default function Home() {
                   </div>
                   <div className="overflow-hidden rounded-3xl shadow-xl">
                     <Image
-                      src={opportunities[2].image}
-                      alt="SiembraViva farmers"
+                      src={loanOpportunities[2].image}
+                      alt="Brazilian artist"
                       width={400}
                       height={250}
                       className="h-40 w-full object-cover"
@@ -304,12 +316,28 @@ export default function Home() {
                   What is Zipa?
                 </div>
                 <h2 className="text-3xl font-bold text-slate-900 sm:text-4xl">
-                  The World&apos;s First Decentralized Bank That Treats IP as Collateral
+                  Banks Reject IP as Collateral. Blockchain Doesn&apos;t.
                 </h2>
               </div>
-              <p className="text-lg text-center text-slate-600 max-w-3xl mx-auto">
-                The first stablecoin bank where anyone can invest in creators raising $1,000-$100,000. Fund projects instantly with USDT/USDC—no traditional banking required.
-              </p>
+              <div className="text-center max-w-3xl mx-auto space-y-4">
+                <p className="text-lg text-slate-600">
+                  We built infrastructure to:
+                </p>
+                <div className="space-y-3 text-left">
+                  <p className="text-base text-slate-700">
+                    <span className="font-semibold text-[--color-primary]">→</span> Tokenize master recordings into ERC-1155 NFT collateral
+                  </p>
+                  <p className="text-base text-slate-700">
+                    <span className="font-semibold text-[--color-primary]">→</span> Verify streaming revenue automatically on-chain
+                  </p>
+                  <p className="text-base text-slate-700">
+                    <span className="font-semibold text-[--color-primary]">→</span> Match borrowers earning $110B with lenders seeking real yield
+                  </p>
+                </div>
+                <p className="text-lg font-semibold text-slate-900 pt-2">
+                  Result: Artists access capital. Lenders earn 20-50% APR. No banks required.
+                </p>
+              </div>
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 <div className="premium-card p-6 space-y-3">
                   <div className="flex items-center gap-3">
@@ -320,7 +348,7 @@ export default function Home() {
                     </div>
                     <p className="font-semibold text-slate-900">No credit checks required</p>
                   </div>
-                  <p className="text-sm text-slate-600 pl-13">Traditional banks don&apos;t understand innovation. We do.</p>
+                  <p className="text-sm text-slate-600 pl-13">Borrow against your IP, not your credit score. Your art is the collateral.</p>
                 </div>
                 <div className="premium-card p-6 space-y-3">
                   <div className="flex items-center gap-3">
@@ -329,9 +357,9 @@ export default function Home() {
                         <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </div>
-                    <p className="font-semibold text-slate-900">IP-backed investments</p>
+                    <p className="font-semibold text-slate-900">Fractional NFT collateral</p>
                   </div>
-                  <p className="text-sm text-slate-600 pl-13">Patents, trademarks, copyrights, and algorithms as collateral</p>
+                  <p className="text-sm text-slate-600 pl-13">Each lender receives tokens representing their share of master recordings</p>
                 </div>
                 <div className="premium-card p-6 space-y-3">
                   <div className="flex items-center gap-3">
@@ -340,9 +368,9 @@ export default function Home() {
                         <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </div>
-                    <p className="font-semibold text-slate-900">You own shares, not debt</p>
+                    <p className="font-semibold text-slate-900">Earn 20-50% APR</p>
                   </div>
-                  <p className="text-sm text-slate-600 pl-13">Acquire real equity with dividend rights</p>
+                  <p className="text-sm text-slate-600 pl-13">Lend from $50 and earn high yields in stablecoins</p>
                 </div>
                 <div className="premium-card p-6 space-y-3">
                   <div className="flex items-center gap-3">
@@ -351,9 +379,9 @@ export default function Home() {
                         <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </div>
-                    <p className="font-semibold text-slate-900">Quarterly dividend payments</p>
+                    <p className="font-semibold text-slate-900">Monthly repayments</p>
                   </div>
-                  <p className="text-sm text-slate-600 pl-13">Receive returns every 3 months as projects grow</p>
+                  <p className="text-sm text-slate-600 pl-13">Artists repay monthly; you earn interest on your stablecoin capital</p>
                 </div>
                 <div className="premium-card p-6 space-y-3">
                   <div className="flex items-center gap-3">
@@ -362,9 +390,9 @@ export default function Home() {
                         <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </div>
-                    <p className="font-semibold text-slate-900">Invest with stablecoins</p>
+                    <p className="font-semibold text-slate-900">X402 cross-chain protocol</p>
                   </div>
-                  <p className="text-sm text-slate-600 pl-13">Use USDT or USDC—instant global payments, no currency conversion</p>
+                  <p className="text-sm text-slate-600 pl-13">Lend on any chain, artists receive on theirs—seamless cross-chain lending</p>
                 </div>
               </div>
             </div>
@@ -375,12 +403,12 @@ export default function Home() {
           <div className="container space-y-12">
             <div>
               <p className="text-sm uppercase tracking-[0.28em] text-slate-500">
-                Featured Opportunities
+                Active Loan Opportunities
               </p>
             </div>
             <div className="space-y-12">
-              {opportunities.map((item) => (
-                <HighlightOpportunity key={item.title} opportunity={item} />
+              {loanOpportunities.map((item) => (
+                <HighlightLoanOpportunity key={item.title} loan={item} />
               ))}
             </div>
           </div>
@@ -395,10 +423,10 @@ export default function Home() {
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
-                  How We Protect Investors
+                  How We Protect Lenders
                 </div>
                 <h2 className="text-3xl font-bold text-slate-900 sm:text-4xl">
-                  Your Investment is Secured by Real Assets
+                  Your Capital is Secured by IP Collateral NFTs
                 </h2>
               </div>
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -438,8 +466,8 @@ export default function Home() {
                       <path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </div>
-                  <h3 className="text-lg font-semibold text-slate-900">Collateral Rights</h3>
-                  <p className="text-sm text-slate-600">If project fails, IP ownership transfers to investors</p>
+                  <h3 className="text-lg font-semibold text-slate-900">Collateral Liquidation</h3>
+                  <p className="text-sm text-slate-600">If artist defaults, lenders receive fractional IP NFTs to resell or license</p>
                 </div>
                 <div className="premium-card p-6 space-y-3">
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-red-100 text-red-600">
@@ -473,10 +501,10 @@ export default function Home() {
                 Simple Process
               </p>
               <h2 className="text-3xl font-semibold leading-tight">
-                How It Works
+                How Lending Works
               </h2>
               <p className="max-w-2xl mx-auto text-lg text-slate-600">
-                Building your IP-backed portfolio and earning returns is easier than you think.
+                Earn 20-50% APR by lending to artists worldwide. Your capital is secured by fractional IP NFT collateral.
               </p>
             </div>
             <div className="grid gap-8 md:grid-cols-3">
@@ -485,9 +513,9 @@ export default function Home() {
                   1
                 </div>
                 <div className="space-y-3">
-                  <h3 className="text-2xl font-semibold">Browse IP-Backed Projects</h3>
+                  <h3 className="text-2xl font-semibold">Browse Active Loans</h3>
                   <p className="text-base leading-relaxed text-slate-600">
-                    Explore vetted projects from creators worldwide. Each listing shows the IP collateral, funding goal (&lt;$100k), equity share offered, and quarterly dividend terms.
+                    Artists list their IP (music masters, films, algorithms) with verified streaming revenue. Each loan shows APR (20-50%), term length, collateral NFT details, and repayment schedule.
                   </p>
                 </div>
               </div>
@@ -496,9 +524,9 @@ export default function Home() {
                   2
                 </div>
                 <div className="space-y-3">
-                  <h3 className="text-2xl font-semibold">Acquire Equity Shares</h3>
+                  <h3 className="text-2xl font-semibold">Lend & Receive NFT Tokens</h3>
                   <p className="text-base leading-relaxed text-slate-600">
-                    Invest as little as $100 or as much as you want. You&apos;re buying shares in the project, not making a donation. Your stake is secured by the creator&apos;s intellectual property.
+                    Lend from $50 in USDT/USDC. Instantly receive ERC-1155 tokens representing your fractional ownership of the IP collateral. The master recordings are locked in smart contract escrow.
                   </p>
                 </div>
               </div>
@@ -507,9 +535,9 @@ export default function Home() {
                   3
                 </div>
                 <div className="space-y-3">
-                  <h3 className="text-2xl font-semibold">Earn Quarterly Dividends</h3>
+                  <h3 className="text-2xl font-semibold">Earn Monthly Payments</h3>
                   <p className="text-base leading-relaxed text-slate-600">
-                    As the project generates revenue, you receive your share every 3 months. Track your portfolio, view IP documentation, and manage your investments from your dashboard.
+                    Artists repay monthly in stablecoins. You earn 20-50% APR. If they default after 90 days, your collateral NFT tokens unlock—sell them on our IP marketplace or license the masters yourself.
                   </p>
                 </div>
               </div>
@@ -521,10 +549,10 @@ export default function Home() {
           <div className="container space-y-12">
             <div className="text-center space-y-4">
               <h2 className="text-3xl font-semibold leading-tight">
-                Why Zipa vs Traditional Banks?
+                Why Zipa Beats Traditional Lending?
               </h2>
               <p className="max-w-2xl mx-auto text-lg text-slate-600">
-                Join thousands of investors building IP-backed portfolios and earning quarterly dividends.
+                Banks reject 99% of creative borrowers. DeFi lending platforms don&apos;t accept IP collateral. Zipa bridges both worlds.
               </p>
             </div>
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
@@ -546,9 +574,9 @@ export default function Home() {
                     />
                   </svg>
                 </div>
-                <h3 className="text-xl font-semibold">Simple &amp; Accessible</h3>
+                <h3 className="text-xl font-semibold">Higher Yields</h3>
                 <p className="text-sm leading-relaxed text-slate-600">
-                  Forget complex financial jargon. Our platform is designed for everyone, no matter your experience with investing.
+                  Earn 20-50% APR vs 3-8% in traditional DeFi. Your capital works harder because emerging market artists pay premium rates for access to global liquidity.
                 </p>
               </div>
               <div className="premium-card flex flex-col gap-4 p-8">
@@ -569,9 +597,9 @@ export default function Home() {
                     />
                   </svg>
                 </div>
-                <h3 className="text-xl font-semibold">Real Returns</h3>
+                <h3 className="text-xl font-semibold">Real Collateral</h3>
                 <p className="text-sm leading-relaxed text-slate-600">
-                  Your support isn&apos;t just a donation. It&apos;s an investment that pays you back, creating a sustainable cycle of good.
+                  Unlike crypto lending, your loans are backed by income-generating IP. Master recordings keep earning royalties even if the artist defaults.
                 </p>
               </div>
               <div className="premium-card flex flex-col gap-4 p-8">
@@ -599,9 +627,9 @@ export default function Home() {
                     />
                   </svg>
                 </div>
-                <h3 className="text-xl font-semibold">Transparency</h3>
+                <h3 className="text-xl font-semibold">Transparent On-Chain</h3>
                 <p className="text-sm leading-relaxed text-slate-600">
-                  See exactly where your money is going and track the progress of the projects you support.
+                  Every loan, repayment, and collateral transfer is on-chain. Track your NFT tokens in real-time. No hidden fees or opaque terms.
                 </p>
               </div>
               <div className="premium-card flex flex-col gap-4 p-8">
@@ -613,32 +641,13 @@ export default function Home() {
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <path
-                      d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <circle
-                      cx="9"
-                      cy="7"
-                      r="4"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    />
-                    <path
-                      d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
+                    <path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" stroke="currentColor" strokeWidth="2"/>
                   </svg>
                 </div>
-                <h3 className="text-xl font-semibold">Global Community</h3>
+                <h3 className="text-xl font-semibold">Cross-Chain Global</h3>
                 <p className="text-sm leading-relaxed text-slate-600">
-                  Connect with creators and a community of like-minded individuals from around the world who are all working towards a better future.
+                  X402 protocol enables artists to borrow on Tron, lenders to fund on Ethereum. True borderless finance without dealing with banks or exchange restrictions.
                 </p>
               </div>
             </div>
@@ -650,10 +659,10 @@ export default function Home() {
         <div className="container py-10">
           <div className="text-center">
             <p className="text-lg font-semibold text-[--color-primary]">
-              Ready to invest with USDT or USDC?
+              Ready to earn 20-50% APR lending to artists?
             </p>
             <p className="text-sm text-slate-600 mt-2">
-              Join investors worldwide earning quarterly dividends from IP-backed projects. No banks, no borders, instant settlement.
+              Join lenders worldwide earning high yields from IP-backed loans. Artists borrow, you earn, all powered by X402. No banks, no borders.
             </p>
           </div>
         </div>
